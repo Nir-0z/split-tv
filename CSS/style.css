@@ -1,4 +1,4 @@
-/* general ddd */
+/* general */
 body * { transition:0.5s; text-align:center; }
 nav { height:5vh; line-height:5vh; font-size:3vh; }
 video { object-fit:fill; width:100%; height:calc(100% - 5vh); }
