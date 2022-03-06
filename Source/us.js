@@ -24,7 +24,7 @@ var source = {
  'C-SPAN 1': '',
  'C-SPAN 2': '',
  'C-SPAN 3': '',
-  /* business */
+ /* business */
  'CNBC': '',
  'Fox Business': '',
  'Bloomberg': '//bloomberg-bloomberg-1-pt.samsung.wurl.com/manifest/playlist.m3u8',
