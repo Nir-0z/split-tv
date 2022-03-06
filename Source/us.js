@@ -4,7 +4,7 @@ var source = {
  'CBS (East)' : '//5e6cea03e25b6.streamlock.net/live/WCTVDT.stream/playlist.m3u8',
  'NBC (East)' : '//5e6cea03e25b6.streamlock.net/live/WTWC-NB.stream/playlist.m3u8',
  'FOX (East)' : '//5e6cea03e25b6.streamlock.net/live/WTWC-FX.stream/playlist.m3u8',
- 'CW (East)' : '//trn03.tulix.tv/teleup-N8qwnqgUq2/playlist.m3u8',
+ 'CW (East)' : '//5e6cea03e25b6.streamlock.net/live/WTLHCW.stream/playlist.m3u8',
  'PBS (East)' : '//status.tehw00t.net/miniProxy.php/https://wnetdt.lls.pbs.org/out/v1/0456457548354b88b32fc437e4e7ee01/index.m3u8',
  /* news */
  'ABC News': '//content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8',
