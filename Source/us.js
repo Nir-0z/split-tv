@@ -1,10 +1,10 @@
 var source = {
  /* networks */
- 'ABC (East)' : '',
- 'CBS (East)' : '',
- 'NBC (East)' : '',
- 'FOX (East)' : '',
- 'CW (East)' : '',
+ 'ABC (East)' : '//5e6cea03e25b6.streamlock.net/live/WTXLHD.stream/playlist.m3u8',
+ 'CBS (East)' : '//5e6cea03e25b6.streamlock.net/live/WCTVDT.stream/playlist.m3u8',
+ 'NBC (East)' : '//5e6cea03e25b6.streamlock.net/live/WTWC-NB.stream/playlist.m3u8',
+ 'FOX (East)' : '//5e6cea03e25b6.streamlock.net/live/WTWC-FX.stream/playlist.m3u8',
+ 'CW (East)' : '//trn03.tulix.tv/teleup-N8qwnqgUq2/playlist.m3u8',
  'PBS (East)' : '//status.tehw00t.net/miniProxy.php/https://wnetdt.lls.pbs.org/out/v1/0456457548354b88b32fc437e4e7ee01/index.m3u8',
  /* news */
  'ABC News': '//content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8',
@@ -18,17 +18,18 @@ var source = {
  'NewsNation': '//dcs-live.mp.lura.live/server/play/p0d3eNBh3XOxUQP7/manifest.m3u8',
  'Newsmax': '//nmxlive.akamaized.net/hls/live/529965/Live_1/index.m3u8',
  'OANN': '//oneamericanews-roku-us.amagi.tv/playlist.m3u8',
- 'Live FOX': '//fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8',
+ 'Live Now': '//fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8',
  'Cheddar': '//live.chdrstatic.com/cbn/index.m3u8',
  /* politics */
- 'C-SPAN 1': '',
- 'C-SPAN 2': '',
- 'C-SPAN 3': '',
+ 'C-SPAN 1': '//trn03.tulix.tv/teleup-cspan/playlist.m3u8',
+ 'C-SPAN 2': '//skystreams-lh.akamaihd.net/i/SkyC2_1@500807/master.m3u8',
+ 'C-SPAN 3': '//skystreams-lh.akamaihd.net/i/SkyC3_1@500808/master.m3u8',
  /* business */
  'CNBC': '',
  'Fox Business': '',
  'Bloomberg': '//bloomberg-bloomberg-1-pt.samsung.wurl.com/manifest/playlist.m3u8',
  /* weather */
  'Weather Channel': '',
- 'Fox Weather': '',
+ 'AccuWeather': '//cdn-ue1-prod.tsv2.amagi.tv/linear/amg00684-accuweather-accuweather-plex/playlist.m3u8',
+ 'Fox Weather': '//247wlive.foxweather.com/stream/index.m3u8',
 };
