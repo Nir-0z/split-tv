@@ -27,8 +27,8 @@ var channels = {
   N12: [{name:'N12', link:'//keshethlslive-lh.akamaihd.net/i/c2nsec_1@195268/master.m3u8'}],
 
  /* כתוביות */
-  CC11: [{name:'כאן 11', link:'//kanlivep2event-i.akamaihd.net/hls/live/747610/747610/master.m3u8'}],
-  CC12: [{name:'קשת 12', link:'//keshethlslive-lh.akamaihd.net/i/CH12CC_1@732426/index_2200_av.m3u8'}],
-  CC13: [{name:'רשת 13', link:'//d198ztbnlup2iq.cloudfront.net/out/v1/2d9050c90fb94df8b78d1d98306a1a65/index.m3u8'}],
+  CC11: [{name:'כאן כתוביות', link:'//kanlivep2event-i.akamaihd.net/hls/live/747610/747610/master.m3u8'}],
+  CC12: [{name:'קשת כתוביות', link:'//keshethlslive-lh.akamaihd.net/i/CH12CC_1@732426/index_2200_av.m3u8'}],
+  CC13: [{name:'רשת כתוביות', link:'//d198ztbnlup2iq.cloudfront.net/out/v1/2d9050c90fb94df8b78d1d98306a1a65/index.m3u8'}],
  
 };
