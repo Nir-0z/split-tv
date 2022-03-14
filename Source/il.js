@@ -6,7 +6,7 @@ var channels = {
   CH13: [{name:'רשת 13', link:'//d18b0e6mopany4.cloudfront.net/out/v1/08bc71cf0a0f4712b6b03c732b0e6d25/index.m3u8'}],
   CH14: [{name:'עכשיו 14', link:'//splittv.ch20-cdnwiz.com/hls/live.m3u8'}],
 
- /* קטנים */
+ /* כבלים */
   CH21: [{name:'ערוץ הקניות', link:'//shoppingil-rewriter.vidnt.com/index.m3u8'}],
   CH24: [{name:'ערוץ 24', link:'//keshethlslive-lh.akamaihd.net/i/24live_1@195271/index_1400_av-b.m3u8'}],
   CH26: [{name:'האח הגדול', link:'//'}],
