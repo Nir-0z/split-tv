@@ -26,9 +26,9 @@ var channels = {
   CH34: [{name:'i24News', link:'//'}],
 
  /* כתוביות */
-  CH11: [{name:'כאן 11', link:'//kanlivep2event-i.akamaihd.net/hls/live/747610/747610/master.m3u8'}],
-  CH12: [{name:'קשת 12', link:'//keshethlslive-lh.akamaihd.net/i/CH12CC_1@732426/index_2200_av.m3u8'}],
-  CH13: [{name:'רשת 13', link:'//d198ztbnlup2iq.cloudfront.net/out/v1/2d9050c90fb94df8b78d1d98306a1a65/index.m3u8'}],
-  CH14: [{name:'עכשיו 14', link:'//splittv.ch20-cdnwiz.com/hls/live.m3u8'}],
+  CC11: [{name:'כאן 11', link:'//kanlivep2event-i.akamaihd.net/hls/live/747610/747610/master.m3u8'}],
+  CC12: [{name:'קשת 12', link:'//keshethlslive-lh.akamaihd.net/i/CH12CC_1@732426/index_2200_av.m3u8'}],
+  CC13: [{name:'רשת 13', link:'//d198ztbnlup2iq.cloudfront.net/out/v1/2d9050c90fb94df8b78d1d98306a1a65/index.m3u8'}],
+  CC14: [{name:'עכשיו 14', link:'//splittv.ch20-cdnwiz.com/hls/live.m3u8'}],
  
 };
