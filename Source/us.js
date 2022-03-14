@@ -10,8 +10,8 @@ var source = {
 
  /* news */
   ABCNews: [{name:'ABC News', link:'//content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8'}],
-  CBSNews: [{name:'NBC News', link:'//cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8'}],
-  NBCNews: [{name:'CBS News', link:'//nbcnews2.akamaized.net/hls/live/723426/NBCNewsPlaymaker24x7Linear99a3a827-ua/master.m3u8'}],
+  CBSNews: [{name:'CBS News', link:'//cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8'}],
+  NBCNews: [{name:'NBC News', link:'//nbcnews2.akamaized.net/hls/live/723426/NBCNewsPlaymaker24x7Linear99a3a827-ua/master.m3u8'}],
   CNN: [{name:'CNN', link:'//cnnpro.newscdn.org/NF54vHKmvXlMhQ5xw4QqQQ==,1646612404/1384240915/rewind-48400.m3u8'}],
   FoxNews: [{name:'Fox News', link:'//1312990316.rsc.cdn77.org/m39AwZqPrWmNsyHKkqbiWg==,1646612404/1312990316/rewind-24400.m3u8'}],
   MSNBC: [{name:'MSNBC', link:'//1229472784.rsc.cdn77.org/FrqFUvV90YPCJQbjM6Jueg==,1646615203/1229472784/rewind-28000.m3u8'}],
