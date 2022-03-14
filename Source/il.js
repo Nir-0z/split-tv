@@ -1,4 +1,4 @@
-var channels = {
+var source = {
 
  /* ברודקאסט */
   CH11: [{name:'כאן 11', link:'//kan11.media.kan.org.il/hls/live/2024514/2024514/master.m3u8'}],
