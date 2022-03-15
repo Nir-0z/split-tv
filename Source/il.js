@@ -1,13 +1,11 @@
-function test() {
 $.getJSON("//mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=ngt&lp=/i/CH12LIVE_HIGH/index.m3u8?b=200-2500&rv=AKAMAI", function(json12){
-source['CH12'][0].link = 'https://keshethlslive-i.akamaihd.net/hls/live/512033/CH2LIVE_HIGH/index.m3u8?' + json12.tickets[0].ticket });
-}
+source['CH12'][0].link = '//keshethlslive-i.akamaihd.net/hls/live/512033/CH2LIVE_HIGH/index.m3u8?' + json12.tickets[0].ticket });
 
 var source = {
 
  /* ברודקאסט */
   CH11: [{name:'כאן 11', link:'//kan11.media.kan.org.il/hls/live/2024514/2024514/master.m3u8'}],
-  CH12: [{name:'קשת 12', link:test()}],
+  CH12: [{name:'קשת 12', link:'//keshethlslive-i.akamaihd.net/hls/live/512033/CH2LIVE_HIGH/index.m3u8'}],
   CH13: [{name:'רשת 13', link:'//d18b0e6mopany4.cloudfront.net/out/v1/08bc71cf0a0f4712b6b03c732b0e6d25/index.m3u8'}],
   CH14: [{name:'עכשיו 14', link:'//splittv.ch20-cdnwiz.com/hls/live.m3u8'}],
 
