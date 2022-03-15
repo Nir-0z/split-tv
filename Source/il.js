@@ -29,7 +29,7 @@ var source = {
   CH34: [{name:'i24News', link:'//d3kl0e87lk5c6c.cloudfront.net/v1/manifest/9d062541f2ff39b5c0f48b743c6411d25f62fc25/FuelTV-Plex/56982da0-adfa-4ed6-a741-e0bac65ba0a9/0.m3u8'}],
  
  /* אתרים */
-  Ynet: [{name:'Ynet', link:'//ynet-lh.akamaihd.net/i/ynet_1@123293/master.m3u8'}],
+  Ynet: [{name:'Ynet', link:'//yitlivevid.mmdlive.lldns.net/yitlivevid/1dafd6053fb24d7fa905fb99eb4635be/manifest.m3u8'}],
   Walla: [{name:'Walla', link:'//live.wcdn.co.il/news/prog_index.m3u8'}],
   N12: [{name:'N12', link:'//keshethlslive-lh.akamaihd.net/i/c2nsec_1@195268/master.m3u8'}],
 
