@@ -10,7 +10,6 @@ var source = {
  /* USA */
   Alhurra: [{name:'الحرة', link:'//mbningestworld-i.akamaihd.net/hls/live/586122/worldsafe/master.m3u8'}],
 
-
  /* Lebanon */
   Mayadeen: [{name:'الميادين', link:'//lmdstrm.cdn.octivid.com/mayadeen-live/smil:mayadeen.smil/playlist.m3u8'}],
   Manar: [{name:'المنار', link:'//manar.live/iptv/index.m3u8'}],
