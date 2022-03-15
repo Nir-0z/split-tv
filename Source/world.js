@@ -5,7 +5,7 @@ var source = {
 
  /* America */
   CNN: [{name:'CNNi', link:'//cnn-cnninternational-1-eu.rakuten.wurl.com/manifest/playlist.m3u8'}],
-  Global: [{name:'Global News', link:'//dai2.xumo.com/amagi_hls_data_xumo1212A-foxweather-xumo/CDN/master.m3u8'}],
+  Global: [{name:'Global News', link:'//dai.google.com/linear/hls/pa/event/cQOVg6jKSvusQAfYpTrUoQ/stream/29bd32bb-a620-412c-9a68-e35c8a4fb332:BRU/master.m3u8'}],
 
  /* Europe */
   Euronews: [{name:'Euronews', link:'//rakuten-euronews-1-ie.samsung.wurl.com/manifest/playlist.m3u8'}],
