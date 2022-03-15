@@ -8,10 +8,10 @@ var source = {
   Hadath: [{name:'الحدث', link:'//av.alarabiya.net/alarabiapublish/alhadath.smil/playlist.m3u8'}],
 
  /* USA */
-  Alhurra: [{name:'الحرة', link:'//mbningestworld-i.akamaihd.net/hls/live/586122/worldsafe/master.m3u8'}],
+  Hurra: [{name:'الحرة', link:'//mbningestworld-i.akamaihd.net/hls/live/586122/worldsafe/master.m3u8'}],
 
  /* Lebanon */
-  Mayadeen: [{name:'الميادين', link:'//lmdstrm.cdn.octivid.com/mayadeen-live/smil:mayadeen.smil/playlist.m3u8'}],
+  Mayadeen: [{name:'الميادين', link:'//mdnlv.cdn.octivid.com/almdn/smil:mpegts.stream.smil/playlist.m3u8'}],
   Manar: [{name:'المنار', link:'//manar.live/iptv/index.m3u8'}],
 
  /* Palestine */
