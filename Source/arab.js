@@ -16,8 +16,8 @@ var source = {
 
  /* Palestine */
   Musawa: [{name:'مساواة', link:'//pbc.furrera.ps/musawahd/index.m3u8'}],
-  Quds: [{name:'قناة القدس', link:'//185.5.222.146:8081/live/habbq18/playlist.m3u8'}],
-  Aqsa: [{name:'قناة الأقصى', link:'//dacastmmd.mmdlive.lldns.net/dacastmmd/91fd19e6da5d4acd833174df1dd9344d/manifest.m3u8'}],
+  Quds: [{name:'القدس', link:'//185.5.222.146:8081/live/habbq18/playlist.m3u8'}],
+  Aqsa: [{name:'الأقصى', link:'//dacastmmd.mmdlive.lldns.net/dacastmmd/91fd19e6da5d4acd833174df1dd9344d/manifest.m3u8'}],
 
  /* Israel */
   Hala: [{name:'هلا', link:'//gstream4.panet.co.il/edge/halaTV/playlist.m3u8'}],
