@@ -8,7 +8,7 @@ var source = {
 
  /* ברודקאסט */
   CH11: [{name:'כאן 11', link:'//kan11.media.kan.org.il/hls/live/2024514/2024514/master.m3u8'}],
-  CH12: [{name:'קשת 12', link:function test()}],
+  CH12: [{name:'קשת 12', link:test()}],
   CH13: [{name:'רשת 13', link:'//d18b0e6mopany4.cloudfront.net/out/v1/08bc71cf0a0f4712b6b03c732b0e6d25/index.m3u8'}],
   CH14: [{name:'עכשיו 14', link:'//splittv.ch20-cdnwiz.com/hls/live.m3u8'}],
 
