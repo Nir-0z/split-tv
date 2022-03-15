@@ -1,4 +1,4 @@
- $(function() {
+ $(function test() {
 $.getJSON("//mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=ngt&lp=/i/CH12LIVE_HIGH/index.m3u8?b=200-2500&rv=AKAMAI", function(json12){
 source['CH12'][0].link = 'https://keshethlslive-i.akamaihd.net/hls/live/512033/CH2LIVE_HIGH/index.m3u8?' + json12.tickets[0].ticket;
 });
