@@ -1,7 +1,5 @@
 var source = {
 
- /* World */
-
   /* Aabia */
   Jazeera: [{name:'الجزيرة', link:'//live-hls-web-aja.getaj.net/AJA/index.m3u8'}],
   Arabiya: [{name:'العربية', link:'//live.alarabiya.net/alarabiapublish/alarabiya.smil/playlist.m3u8'}],
