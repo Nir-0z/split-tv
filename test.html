@@ -1,48 +1,67 @@
 <!-- Meta -->
-<meta name="theme-color" content="#C62828" />
+<meta name="theme-color" content="#424242" />
 
 <!-- Site -->
-<nav class="red darken-3">המסך המפוצל האמריקני</nav>
+<nav class="grey darken-3">המסך המפוצל הבינלאומי</nav>
 <div class="grid-stack"></div>
 
 <!-- Style -->
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack.min.css">
-<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/NirOzFiles/split-tv/CSS/style.css">
 
-<!-- Script -->
+<style>
+/* general */
+body * { transition:0.5s; text-align:center; }
+nav { height:5vh; line-height:5vh; font-size:3vh; }
+video { object-fit:fill; width:100%; height:calc(100% - 5vh); }
+@media(orientation:portrait) { nav { position:fixed; bottom:0vh; } }
+@font-face { font-family:'Material'; src:url(https://fonts.gstatic.com/s/materialiconsoutlined/v100/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2);}
+/* gridstack */
+.grid-stack { margin:1vh; }
+.grid-stack *, body { overflow:hidden!important; }
+.grid-stack-item-content, .placeholder-content { background:#666; border-radius:1vw; } .placeholder-content { opacity:25%; }
+.handle { display:flex; cursor:move; color:#FFF; border-bottom:solid 1px #555; height:5vh; font-size:2vh; padding:1vh; opacity:50%; } .handle:hover { opacity:100%; }
+.ui-resizable-se, .ui-resizable-sw { bottom:4px!important; background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><path fill="%23FFF" d="M9 3h2L8 0 5 3h2v10H5l3 3 3-3H9"/></svg>')!important; }
+.remove::after { font-family:'Material'; content:"highlight_off"; }
+</style>
+
+<!-- Script Files -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack-jq.js"></script>
 <script src='//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.light.min.js'></script>
+<script src='//cdn.jsdelivr.net/gh/NirOzFiles/split-tv/Source/world.js'></script>
 
 <script>
-/* start */
-var grid = GridStack.init({ maxRow:'15', cellHeight:'auto', margin:'0.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle: /Android|iPhone|iPad|Opera Mini/i.test(navigator.userAgent) });
-screen.orientation.onchange = function (){ screen.orientation.type.match(/\w+/)=='portrait' ? grid.cellHeight('5vh') : grid.cellHeight('11.5vh') };
-screen.orientation.onchange();
+/* grid */
+var grid = GridStack.init({ maxRow:'8', cellHeight:'auto', margin:'0.25vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle: /Android|iPhone|iPad|Opera Mini/i.test(navigator.userAgent) });
 
 /* source */
-var i = 0;
-var source = {
- 'ABC News': '//content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8',
- 'CBS News': '//cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8',
- 'NBC News': '//nbcnews2.akamaized.net/hls/live/723426/NBCNewsPlaymaker24x7Linear99a3a827-ua/master.m3u8',
- 'CNN': '//content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8',
- 'Fox News': '//cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8',
- 'MSNBC': '//nbcnews2.akamaized.net/hls/live/723426/NBCNewsPlaymaker24x7Linear99a3a827-ua/master.m3u8'
-};
-
-/* build */
+var channels = ['CNN','BBC','Frane','DW','RT','AlJazeera'];
+ 
+/* start */
 $(function() {
- for(let channel in source) {
-  grid.addWidget({w:4, h:4, content:'<div class="center handle">'+channel+'</div><video playsinline autoplay muted id="'+channel.replaceAll(" ", "")+'"></video>'});
-  i++
+ for(let i in channels) {
+  grid.addWidget({w:4, h:4, content:'<div class="row center"><div class="col s1 remove" onclick="grid.removeWidget(this.parentNode.parentNode.parentNode)"></div><div class="col s11 handle">'+source[channels[i]][0].name+'</div></div><video autoplay muted playsinline id="'+channels[i]+'"></video>'});
+  $('#'+channels[i])[0].setAttribute("controls","controls");
+   add(i);
  }
 });
  
 /* add */
 let add = i => {
- if (Hls.isSupported()) { var hls = new Hls(); hls.loadSource(sources[i]); hls.attachMedia($('#ch0'+i)[0]); }
- else { $('#ch0'+i)[0].src = sources[i]; }
+ if (Hls.isSupported()) { var hls = new Hls(); hls.loadSource(source[channels[i]][0].link); hls.attachMedia($('#'+channels[i])[0]); }
+ else {$('#'+channels[i])[0].src = source[channels[i]][0].link; }
 }
+
+/* orientation */
+ if (window.matchMedia("(orientation: portrait)").matches) { grid.cellHeight('5.5vh') }
+ if (window.matchMedia("(orientation: landscape)").matches) { grid.cellHeight('11.5vh') }
+ function doOnOrientationChange() {
+  switch(window.orientation) {
+   case 90: case -90: grid.cellHeight('11.5vh'); break;
+   case 0: case 180: grid.cellHeight('5.5vh'); break;
+  }
+ }
+window.addEventListener('orientationchange', doOnOrientationChange);
+doOnOrientationChange();
 </script>
