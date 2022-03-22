@@ -19,7 +19,7 @@ var source = {
  /* Cable */
   HLN: [{name:'HLN', link:'//turnerlive.warnermediacdn.com/hls/live/586496/cnngo/hln/VIDEO_0_3564000.m3u8'}],
   NewsNation: [{name:'News Nation', link:'//dcs-live.mp.lura.live/server/play/p0d3eNBh3XOxUQP7/manifest.m3u8'}],
-  Newsmax: [{name:'Newsmax', link:'//newsmax-samsungus.amagi.tv/playlist.m3u8'}],
+  Newsmax: [{name:'Newsmax', link:'//newsmax-roku.amagi.tv/playlist.m3u8'}],
   OANN: [{name:'OANN', link:'//oneamericanews-roku-us.amagi.tv/playlist.m3u8'}],
   LiveNow: [{name:'Live Now', link:'//fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8'}],
   Cheddar: [{name:'Cheddar', link:'//live.chdrstatic.com/cbn/index.m3u8'}],
