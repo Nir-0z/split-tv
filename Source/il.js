@@ -13,7 +13,7 @@ var source = {
   CH21: [{name:'ערוץ הקניות', link:'//shoppingil-rewriter.vidnt.com/index.m3u8'}],
   CH24: [{name:'ערוץ 24', link:'//keshethlslive-lh.akamaihd.net/i/24live_1@195271/index_1400_av-b.m3u8'}],
   CH26: [{name:'האח הגדול', link:'//d2lckchr9cxrss.cloudfront.net/out/v1/c73af7694cce4767888c08a7534b503c/index.m3u8'}],
-  CH80: [{name:'חינוכית', link:'//kanlivep2event-i.akamaihd.net/hls/live/747600/747600/master.m3u8'}],
+  CH80: [{name:'חינוכית', link:'//kan23.media.kan.org.il/hls/live/2024691/2024691/master.m3u8'}],
   CH96: [{name:'קבלה לעם', link:'//edge2.il.kab.tv/live/tv66-heb-high/playlist.m3u8'}],
   CH97: [{name:'הידברוץ', link:'//stream72.shidur.net/htvlive2/_definst_/smil:live2.smil/playlist.m3u8'}],
   CH99: [{name:'כנסת', link:'//contact.gostreaming.tv/Knesset/myStream/playlist.m3u8'}],
@@ -21,7 +21,7 @@ var source = {
  /* שפות */
   CH09: [{name:'ערוץ 9', link:'//50.7.231.220:8081/185/index.m3u8?wmsAuthSign=okad'}],
   CH30: [{name:'הלא TV', link:'//gstream4.panet.co.il/edge/halaTV/playlist.m3u8'}],
-  CH33: [{name:'מכאן', link:'//kanlivep2event-i.akamaihd.net/hls/live/747613/747613/master.m3u8'}],
+  CH33: [{name:'מכאן', link:'//makan.media.kan.org.il/hls/live/2024680/2024680/master.m3u8'}],
   CH34: [{name:'i24News', link:'//d3kl0e87lk5c6c.cloudfront.net/v1/manifest/9d062541f2ff39b5c0f48b743c6411d25f62fc25/FuelTV-Plex/56982da0-adfa-4ed6-a741-e0bac65ba0a9/0.m3u8'}],
  
  /* אתרים */
