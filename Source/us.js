@@ -1,12 +1,15 @@
 var source = {
 
  /* Networks */
-  ABC: [{name:'ABC (East)', link:'//5e6cea03e25b6.streamlock.net/live/WTXLHD.stream/playlist.m3u8'}],
-  CBS: [{name:'NBC (East)', link:'//5e6cea03e25b6.streamlock.net/live/WCTVDT.stream/playlist.m3u8'}],
-  NBC: [{name:'CBS (East)', link:'//5e6cea03e25b6.streamlock.net/live/WTWC-NB.stream/playlist.m3u8'}],
-  FOX: [{name:'FOX (East)', link:'//5e6cea03e25b6.streamlock.net/live/WTWC-FX.stream/playlist.m3u8'}],
-  CW: [{name:'CW (East)', link:'//5e6cea03e25b6.streamlock.net/live/WTLHCW.stream/playlist.m3u8'}],
-  PBS: [{name:'PBS (East)', link:'//status.tehw00t.net/miniProxy.php/https://wnetdt.lls.pbs.org/out/v1/0456457548354b88b32fc437e4e7ee01/index.m3u8'}],
+  ABCE: [{name:'ABC (East)', link:'//51.161.118.146/ISG03_ABC_BOSTON_MA_WCVB/video.m3u8'}],
+  CBSE: [{name:'CBS (East)', link:'//51.161.118.146/ISG03_CBS_BOSTON_MA_WBZ/video.m3u8'}],
+  FOXE: [{name:'FOX (East)', link:'//51.161.118.146/ISG03_FOX_BOSTON_MA_WFXT/video.m3u8'}],
+  NBCE: [{name:'NBC (East)', link:'//51.161.118.146/ISG03_NBC_BOSTON_MA_WBTS/video.m3u8'}],
+  ABCW: [{name:'ABC (West)', link:'//51.161.118.146/ISG03_ABC_SAN_FRANCISCO_CA_KGO/video.m3u8'}],
+  CBSW: [{name:'CBS (West)', link:'//51.161.118.146/ISG03_CBS_SAN_FRANCISCO_CA_KPIX/video.m3u8'}],
+  FOXW: [{name:'FOX (West)', link:'//51.161.118.146/ISG03_FOX_SAN_FRANCISCO_CA_KTVU/video.m3u8'}],
+  NBCW: [{name:'NBC (West)', link:'//51.161.118.146/ISG03_NBC_SAN_FRANCISCO_CA_KNTV/video.m3u8'}],
+  PBS: [{name:'PBS (East)', link:'//status.tehw00t.net/miniProxy.php/https://wgbhdt.lls.pbs.org/out/v1/0e31746edf794871ab0f06cdb48c1e82/index.m3u8'}],
 
  /* News */
   ABCNews: [{name:'ABC News', link:'//content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6be.m3u8'}],
@@ -19,9 +22,9 @@ var source = {
  /* Cable */
   HLN: [{name:'HLN', link:'//turnerlive.warnermediacdn.com/hls/live/586496/cnngo/hln/VIDEO_0_3564000.m3u8'}],
   NewsNation: [{name:'News Nation', link:'//dcs-live.mp.lura.live/server/play/p0d3eNBh3XOxUQP7/manifest.m3u8'}],
-  Newsmax: [{name:'Newsmax', link:'//newsmax-samsungus.amagi.tv/playlist.m3u8'}],
-  OANN: [{name:'OANN', link:'//oneamericanews-roku-us.amagi.tv/playlist.m3u8'}],
-  LiveNow: [{name:'Live Now', link:'//fox-foxnewsnow-samsungus.amagi.tv/playlist.m3u8'}],
+  Newsmax: [{name:'Newsmax', link:'//nmxlive.akamaized.net/hls/live/529965/Live_1/index.m3u8'}],
+  OANN: [{name:'OANN', link:'//oneamericanews-vizio.amagi.tv/playlist.m3u8'}],
+  LiveNow: [{name:'Live Now', link:'//fox-foxnewsnow-vizio.amagi.tv/playlist.m3u8'}],
   Cheddar: [{name:'Cheddar', link:'//live.chdrstatic.com/cbn/index.m3u8'}],
 
  /* Politics */
