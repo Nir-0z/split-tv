@@ -13,8 +13,8 @@ var source = {
  /* News */
   BFMTV: [{name:'BFM TV', link:'//s2.tntendirect.com/bmftv/live/playlist.m3u8'}],
   LCI: [{name:'LCI', link:'//sv0.data-stream.top/hls/lci.m3u8'}],
-  CNews: [{name:'Cnews', link:'//x3b68jn'}],
+  CNews: [{name:'Cnews', link:'//srv1.adriatelekom.com/CNews/index.m3u8'}],
   FranceInfo: [{name:'France Info', link:'//x4rdeu6'}],
-  France24EN: [{name:'France 24 EN', link:'//cdn.klowdtv.net/803B48A/n1.klowdtv.net/live2/france24_720p/chunks.m3u8'}],
+  France24FR: [{name:'France 24 FR', link:'//cdn.klowdtv.net/803B48A/n1.klowdtv.net/live2/france24_720p/chunks.m3u8'}],
 
 };
