@@ -11,6 +11,6 @@ var source = {
   Phoenix: [{name:'Phoenix', link:'//zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8'}],
   WELT: [{name:'WELT', link:'//wu.wukongtv.ga/N24/video.m3u8'}],
   Tagesschau24: [{name:'WELT', link:'//tagesschau.akamaized.net/hls/live/2020117/tagesschau/tagesschau_3/master.m3u8'}],
-  WELT: [{name:'WELT', link:'//bildlivehls-lh.akamaihd.net/i/bildtv247_1@427319/master.m3u8'}],
+  BILD: [{name:'BILD', link:'//bildlivehls-lh.akamaihd.net/i/bildtv247_1@427319/master.m3u8'}],
 
 };
