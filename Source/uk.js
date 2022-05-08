@@ -12,5 +12,6 @@ var source = {
   BBCNews: [{name:'BBC News', link:'//cdnuk001.broadcastcdn.net/KUK-BBCNEWSHD/index.m3u8'}],
   SkyNews: [{name:'Sky News', link:'//siloh.pluto.tv/lilo/production/SkyNews/master.m3u8'}],
   GBNews: [{name:'GB News', link:'//cdnuk001.broadcastcdn.net/KUK-GBNEWS/index.m3u8'}],
+  TalkTV: [{name:'Talk TV', link:'//cdn-ue1-prod.tsv2.amagi.tv/linear/amg00738-newsuk-talkradiotv-ono/playlist.m3u8'}],
 
 };
