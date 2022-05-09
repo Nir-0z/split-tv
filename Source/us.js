@@ -1,10 +1,10 @@
 var source = {
 
  /* Networks */
-  ABCE: [{name:'ABC (East)', link:'//51.161.118.146/ISG03_ABC_BOSTON_MA_WCVB/video.m3u8'}],
+  ABCE: [{name:'ABC (East)', link:'//51.161.118.146/ISG03_ABC_RALEIGH_NC_WTVD/video.m3u8'}],
   CBSE: [{name:'CBS (East)', link:'//51.161.118.146/ISG03_CBS_BOSTON_MA_WBZ/video.m3u8'}],
-  FOXE: [{name:'FOX (East)', link:'//51.161.118.146/ISG03_FOX_BOSTON_MA_WFXT/video.m3u8'}],
-  NBCE: [{name:'NBC (East)', link:'//51.161.118.146/ISG03_NBC_BOSTON_MA_WBTS/video.m3u8'}],
+  FOXE: [{name:'FOX (East)', link:'//51.161.118.146/ISG03_FOX_ATLANTA_GA_WAGA/video.m3u8'}],
+  NBCE: [{name:'NBC (East)', link:'//51.161.118.146:8080/ISG03_NBC_MIAMI_FL_WTVJ/video.m3u8'}],
   ABCW: [{name:'ABC (West)', link:'//51.161.118.146/ISG03_ABC_SAN_FRANCISCO_CA_KGO/video.m3u8'}],
   CBSW: [{name:'CBS (West)', link:'//51.161.118.146/ISG03_CBS_SAN_FRANCISCO_CA_KPIX/video.m3u8'}],
   FOXW: [{name:'FOX (West)', link:'//51.161.118.146/ISG03_FOX_SAN_FRANCISCO_CA_KTVU/video.m3u8'}],
