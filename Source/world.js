@@ -1,7 +1,7 @@
 var source = {
 
  /* Global */
-  Reuters: [{name:'Reuters', link:'//euters-reutersnow-1.plex.wurl.com/manifest/playlist.m3u8'}],
+  Reuters: [{name:'Reuters', link:'//reuters-reutersnow-1.plex.wurl.com/manifest/playlist.m3u8'}],
 
  /* America */
   CNNi: [{name:'CNNi', link:'https://cnn-cnninternational-1-gb.samsung.wurl.com/manifest/playlist.m3u8'}],
