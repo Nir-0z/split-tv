@@ -28,7 +28,7 @@ var source = {
   Cheddar: [{name:'Cheddar', link:'//live.chdrstatic.com/cbn/index.m3u8'}],
 
  /* Politics */
-  CSPAN1: [{name:'C-SPAN 1', link:'//trn03.tulix.tv/teleup-cspan/playlist.m3u8'}],
+  CSPAN1: [{name:'C-SPAN 1', link:'//skystreams-lh.akamaihd.net/i/SkyC1_1@500806/master.m3u8'}],
   CSPAN2: [{name:'C-SPAN 2', link:'//skystreams-lh.akamaihd.net/i/SkyC2_1@500807/master.m3u8'}],
   CSPAN3: [{name:'C-SPAN 3', link:'//skystreams-lh.akamaihd.net/i/SkyC3_1@500808/master.m3u8'}],
 
