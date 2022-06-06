@@ -38,7 +38,7 @@ var source = {
   Bloomberg: [{name:'Bloomberg', link:'//bloomberg-bloomberg-1-pt.samsung.wurl.com/manifest/playlist.m3u8'}],
 
  /* Weather */
-  WeatherChannel: [{name:'Weather Channel', link:'//'}],
+  WeatherChannel: [{name:'Weather Channel', link:'//weather.newscdn.org/ueMJdr5rcHLzdLcuUk5duw==,1654569263/1253851229/index.m3u8'}],
   AccuWeather: [{name:'Accu Weather', link:'//cdn-ue1-prod.tsv2.amagi.tv/linear/amg00684-accuweather-accuweather-plex/playlist.m3u8'}],
   FoxWeather: [{name:'Fox Weather', link:'//247wlive.foxweather.com/stream/index.m3u8'}],
  
