@@ -1,1 +1,17 @@
-<iframe  style="width:100%; height:100%;" src="//ok.ru/videoembed/5043023322831" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+<video id="ch12" style="object-fit:fill; width:100%; height:100%; position:absolute;" controls playsinline autoplay muted></video>
+
+<script src='//code.jquery.com/jquery-3.5.1.min.js'></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/hls.js/0.14.17/hls.light.min.js"></script>
+
+<script>
+$.getJSON("//mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=ngt&lp=/direct/hls/live/2033791/k12dvr/index.m3u8?b-in-range=800-2700&rv=AKAMAI", function(json12){
+ if (Hls.isSupported()) {
+  hls = new Hls();
+  hls.loadSource("//mako-streaming.akamaized.net/direct/hls/live/2033791/k12dvr/index.m3u8?" + json12.tickets[0].ticket);
+  hls.attachMedia(document.getElementById('ch12'));
+  hls.on(Hls.Events.MANIFEST_PARSED,function() {video.play();});
+ } else {
+  document.getElementById('ch12').src = "http://mako-streaming.akamaized.net/direct/hls/live/2033791/k12dvr/index.m3u8?" + json12.tickets[0].ticket;
+ }
+});
+</script>
