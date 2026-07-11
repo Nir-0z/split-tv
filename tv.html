@@ -2,8 +2,8 @@
 <html lang="he" dir="rtl">
 
 <head>
-    <meta charset="UTF-8"><meta name="theme-color" content="#1565C0" /><title>Split TV</title>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gridstack@8.0.0/dist/gridstack.min.css">
+    <meta charset="UTF-8"><meta name="theme-color" content="#1565C0" /><title>המסך המפוצל</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gridstack@12.6.0/dist/gridstack.min.css">
     <style>
         :root { --color:#1565C0; }
         @font-face { font-family:'Glitch'; src:url('https://fonts.gstatic.com/s/rubikglitch/v2/qkBSXv8b_srFRYQVYrDKh9ZfnSTGCNg.woff2'); }
@@ -25,10 +25,11 @@
     <div class="selector"></div>
     <div class="grid-stack"></div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack-jq.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/gridstack@12.6.0/dist/gridstack-all.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
-        var grid = GridStack.init({rtl:true,maxRow:'8',cellHeight:'auto',margin:'0.25vh',draggable:{handle:'.handle'},resizable:{handles:'s,e,w,se,sw'},alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent)}),
+        GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
+        var grid = GridStack.init({rtl:true,maxRow:'8',cellHeight:'auto',margin:'0.25vh',draggable:{handle:'.handle'},resizable:{handles:'s,e,w,se,sw'},alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent)});
             c = window.location.search.replace('?','').trim().toLowerCase();
         Papa.parse('channels.csv',{download:true,header:true,complete:e=>{
             let d = c ? e.data.filter(x => x.country?.toLowerCase() === c) : e.data.filter(x => x.name && x.url);
