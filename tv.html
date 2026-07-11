@@ -57,13 +57,19 @@
 
         let channelsData = [];
 
-        // Load and parse CSV file
+        // Load and parse CSV file with error handling and console logs
         Papa.parse('channels.csv', {
             download: true,
             header: true,
+            error: function(err) {
+                console.error("שגיאה בטעינת קובץ ה-CSV:", err);
+                $('#selector-bar').append('<span style="color:red; font-size:0.8rem;"> (שגיאה בטעינת הנתונים)</span>');
+            },
             complete: function(results) {
+                console.log("נתונים שנקראו:", results.data);
                 // Filter channels matching the URL country parameter
                 channelsData = results.data.filter(ch => ch.country && ch.country.toLowerCase() === currentCountry);
+                console.log("ערוצים מסוננים:", channelsData);
                 buildSelector(channelsData);
             }
         });
@@ -71,7 +77,11 @@
         // Build clickable buttons for filtered channels
         function buildSelector(channels) {
             const bar = $('#selector-bar');
-            channels.forEach((ch, index) => {
+            if (!channels || channels.length === 0) {
+                bar.append('<span style="color:#666; font-size:0.8rem;">(אין ערוצים זמינים למדינה זו)</span>');
+                return;
+            }
+            channels.forEach((ch) => {
                 if(ch.name && ch.url) {
                     const btn = $(`<button class="btn waves-effect waves-light blue darken-2" style="font-size:0.8rem; padding:0 10px;">${ch.name}</button>`);
                     btn.on('click', () => addChannelToGrid(ch));
@@ -82,7 +92,7 @@
 
         // Add selected channel to GridStack
         function addChannelToGrid(channel) {
-            const uniqueId = 'ch_' + Math.random().toString(36).substr(2, 9);
+            const uniqueId = channel.id ? (channel.id + '_' + Math.random().toString(36).substr(2, 5)) : ('ch_' + Math.random().toString(36).substr(2, 9));
             grid.addWidget({
                 w: 4, 
                 h: 4, 
