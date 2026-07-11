@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#1565C0" />
+    <title>Split TV - Dynamic CSV</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gridstack@8.0.0/dist/gridstack.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/Nir-0z/split-tv@latest/CSS/style.css">
+    <style>
+        body { background: #fafafa; margin: 0; padding: 0; }
+        a { float: left; color: white; cursor: pointer; }
+        .channel-selector { padding: 10px; background: #e0e0e0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .grid-stack { height: calc(100vh - 12vh); }
+        video { width: 100%; height: calc(100% - 5vh); object-fit: cover; }
+    </style>
+</head>
+<body>
+
+    <!-- Site Nav -->
+    <nav class="blue darken-3">
+        <div class="nav-wrapper container">
+            <span class="brand-logo left" style="font-size: 1.2rem; padding: 0 15px;">Personal Use / לשימוש אישי</span>
+        </div>
+    </nav>
+
+    <!-- Channel Selector Bar (Dynamic based on CSV) -->
+    <div class="channel-selector" id="selector-bar">
+        <span>בחר ערוץ להוספה:</span>
+    </div>
+
+    <!-- Grid Container -->
+    <div class="grid-stack"></div>
+
+    <!-- Scripts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack-jq.js"></script>
+    <!-- PapaParse for easy CSV parsing -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+
+    <script>
+        var grid = GridStack.init({ 
+            maxRow: '8', 
+            cellHeight: 'auto', 
+            margin: '0.25vh', 
+            draggable: { handle: '.handle' }, 
+            resizable: { handles: 's,e,w,se,sw' }, 
+            alwaysShowResizeHandle: /Android|iPhone|iPad|Opera Mini/i.test(navigator.userAgent) 
+        });
+
+        // Get country from URL parameter (e.g. index.html?country=il)
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentCountry = (urlParams.get('country') || 'il').toLowerCase();
+
+        let channelsData = [];
+
+        // Load and parse CSV file
+        Papa.parse('channels.csv', {
+            download: true,
+            header: true,
+            complete: function(results) {
+                // Filter channels matching the URL country parameter
+                channelsData = results.data.filter(ch => ch.country && ch.country.toLowerCase() === currentCountry);
+                buildSelector(channelsData);
+            }
+        });
+
+        // Build clickable buttons for filtered channels
+        function buildSelector(channels) {
+            const bar = $('#selector-bar');
+            channels.forEach((ch, index) => {
+                if(ch.name && ch.url) {
+                    const btn = $(`<button class="btn waves-effect waves-light blue darken-2" style="font-size:0.8rem; padding:0 10px;">${ch.name}</button>`);
+                    btn.on('click', () => addChannelToGrid(ch));
+                    bar.append(btn);
+                }
+            });
+        }
+
+        // Add selected channel to GridStack
+        function addChannelToGrid(channel) {
+            const uniqueId = 'ch_' + Math.random().toString(36).substr(2, 9);
+            grid.addWidget({
+                w: 4, 
+                h: 4, 
+                content: `<div class="center handle">${channel.name}<a onclick="grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video playsinline autoplay controls src="${channel.url}" id="${uniqueId}"></video>`
+            });
+        }
+
+        /* Orientation handling */
+        function updateCellHeight() {
+            if (window.matchMedia("(orientation: portrait)").matches) { 
+                grid.cellHeight('5.5vh'); 
+            } else { 
+                grid.cellHeight('11.5vh'); 
+            }
+        }
+        window.addEventListener('orientationchange', updateCellHeight);
+        updateCellHeight();
+    </script>
+</body>
+</html>
