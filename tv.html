@@ -51,9 +51,8 @@
             alwaysShowResizeHandle: /Android|iPhone|iPad|Opera Mini/i.test(navigator.userAgent) 
         });
 
-        // Get country from URL parameter (e.g. index.html?country=il)
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentCountry = (urlParams.get('country') || 'il').toLowerCase();
+        // Get dynamic country parameter from URL (e.g. ?il -> il, empty -> "")
+        const currentCountry = window.location.search.replace('?', '').trim().toLowerCase();
 
         let channelsData = [];
 
@@ -67,9 +66,15 @@
             },
             complete: function(results) {
                 console.log("נתונים שנקראו:", results.data);
-                // Filter channels matching the URL country parameter
-                channelsData = results.data.filter(ch => ch.country && ch.country.toLowerCase() === currentCountry);
-                console.log("ערוצים מסוננים:", channelsData);
+                
+                // If a country is specified in URL, filter by it. Otherwise, show all.
+                if (currentCountry) {
+                    channelsData = results.data.filter(ch => ch.country && ch.country.toLowerCase() === currentCountry);
+                } else {
+                    channelsData = results.data.filter(ch => ch.name && ch.url);
+                }
+                
+                console.log("ערוצים מוצגים:", channelsData);
                 buildSelector(channelsData);
             }
         });
@@ -78,7 +83,7 @@
         function buildSelector(channels) {
             const bar = $('#selector-bar');
             if (!channels || channels.length === 0) {
-                bar.append('<span style="color:#666; font-size:0.8rem;">(אין ערוצים זמינים למדינה זו)</span>');
+                bar.append('<span style="color:#666; font-size:0.8rem;">(אין ערוצים זמינים)</span>');
                 return;
             }
             channels.forEach((ch) => {
