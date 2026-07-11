@@ -21,23 +21,20 @@
 </head>
 
 <body>
-    <div class="nav">המסך המפוצל</div>
-    <div class="selector"></div>
-    <div class="grid-stack"></div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/gridstack@12.6.0/dist/gridstack-all.js"></script>
+    <div class="nav">המסך המפוצל</div><div class="selector"></div><div class="grid-stack"></div>
     <script src="//cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="//code.jquery.com/jquery-4.0.0.slim.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/gridstack@12.6.0/dist/gridstack-all.js"></script>
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
         var grid=GridStack.init({rtl:true,maxRow:'8',cellHeight:'auto',margin:'0.25vh',draggable:{handle:'.handle'},resizable:{handles:'s,e,w,se,sw'},alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent)}),
         c=location.search.slice(1).toLowerCase();
         fetch('https://raw.githubusercontent.com/Nir-0z/split-tv/refs/heads/master/channels.csv').then(r=>r.text()).then(t=>{
             let [h,...r]=t.trim().split(/\r?\n/),k=h.split(',');
-            r.map(x=>Object.fromEntries(x.split(',').map((v,i)=>[k[i],v]))).filter(x=>x.name&&x.url&&(!c||x.country.toLowerCase()==c))
-                .forEach(x=>$(`<button class="btn">${x.name}</button>`).on('click',()=>{
-                    grid.addWidget({w:4,h:4,content:`<div class="handle">${x.name}<a onclick="grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video id="v${x.id}" playsinline autoplay controls muted></video>`});
-                    let v=$(`#v${x.id}`)[0]; if(Hls.isSupported()){ let h=new Hls; h.loadSource(x.url); h.attachMedia(v); } else v.src=x.url;
-                }).appendTo('.selector'));
+            r.map(x=>Object.fromEntries(x.split(',').map((v,i)=>[k[i],v]))).filter(x=>x.name&&x.url&&(!c||x.country.toLowerCase()==c)).forEach(x=>$(`<button class="btn">${x.name}</button>`).on('click',()=>{
+                grid.addWidget({w:4,h:4,content:`<div class="handle">${x.name}<a onclick="grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video id="v${x.id}" playsinline autoplay controls muted></video>`});
+                let v=$(`#v${x.id}`)[0]; if(Hls.isSupported()){ let h=new Hls; h.loadSource(x.url); h.attachMedia(v); } else v.src=x.url;
+            }).appendTo('.selector'));
         });
         onresize=()=>grid.cellHeight(matchMedia("(orientation: portrait)").matches?'5.5vh':'11.5vh');
         onresize();
