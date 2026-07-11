@@ -13,12 +13,12 @@
         .nav { background:var(--color); display:grid; place-items:center; padding:.5rem; font-size:2rem; font-family:"Glitch"; }
         .selector { background:#EEE; display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:.5rem; }
         .btn {
-            background:var(--color); border:none; cursor:pointer;
-            font-size:0.8rem; padding: 0 10px; height:32px; border-radius:4px;
-            transition: background 0.2s, transform 0.1s;
+            border:none; cursor:pointer;
+            font-size:1rem; padding: 0 10px; height:2rem; border-radius:1rem;
+            transition:background 0.2s, transform 0.1s;
             display:inline-flex; align-items:center; justify-content:center;
         }
-        .btn:hover { background:#1565C0; } .btn:active { transform:scale(0.9); }
+        .btn:hover { background:var(--color); } .btn:active { transform:scale(0.9); }
         .grid-stack { height:calc(100vh - 12vh); margin:1vh; }
         .grid-stack-item-content, .placeholder-content { background:#666; border-radius:1vw; } .placeholder-content { opacity:0.25; }
         .handle { cursor:move; color:#FFF; padding:1vh; opacity:0.5; display: flex; justify-content: space-between; align-items: center; } .handle:hover { opacity:1; }
