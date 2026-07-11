@@ -29,7 +29,7 @@
     <script src="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack-jq.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script>
-        var grid = GridStack.init({maxRow:'8',cellHeight:'auto',margin:'0.25vh',draggable:{handle:'.handle'},resizable:{handles:'s,e,w,se,sw'},alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent)}),
+        var grid = GridStack.init({rtl:true; maxRow:'8',cellHeight:'auto',margin:'0.25vh',draggable:{handle:'.handle'},resizable:{handles:'s,e,w,se,sw'},alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent)}),
             c = window.location.search.replace('?','').trim().toLowerCase();
         Papa.parse('channels.csv',{download:true,header:true,complete:e=>{
             let d = c ? e.data.filter(x => x.country?.toLowerCase() === c) : e.data.filter(x => x.name && x.url);
