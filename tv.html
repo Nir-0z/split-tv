@@ -21,7 +21,7 @@
 
         Papa.parse('channels.csv',{download:true,header:true,complete:e=>{
             let d = c ? e.data.filter(x => x.country?.toLowerCase() === c) : e.data.filter(x => x.name && x.url);
-            d.forEach(x => {if(x.name && x.url) $(`<button class="btn blue darken-2" style="font-size:0.8rem;padding:0 10px">${x.name}</button>`).on('click', () => grid.addWidget({w:4,h:4,content:`<div class="center handle">${x.name}<a onclick="grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video playsinline autoplay controls muted src="${x.url}"></video>`})).appendTo('#bar')});
+            d.forEach(x => {if(x.name && x.url) $(`<button class="btn blue darken-2 waves-effect" style="font-size:0.8rem;padding:0 10px">${x.name}</button>`).on('click', () => grid.addWidget({w:4,h:4,content:`<div class="center handle">${x.name}<a onclick="grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video playsinline autoplay controls muted src="${x.url}"></video>`})).appendTo('#bar')});
         }});
 
         onresize = () => grid.cellHeight(matchMedia("(orientation: portrait)").matches ? '5.5vh' : '11.5vh');
