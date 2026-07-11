@@ -12,11 +12,7 @@
         video { width:100%; height:calc(100% - 5vh); object-fit:fill; }
         .nav { background:var(--color); display:grid; place-items:center; padding:.5rem; font-size:2rem; font-family:"Glitch"; }
         .selector { background:#F9F9F9; display:flex; flex-wrap:wrap; gap:10px; padding:.5rem; }
-        .btn {
-            border:none; cursor:pointer; height:2rem; padding:1rem; border-radius:1rem;
-            transition:background 0.2s, transform 0.1s;
-            display:inline-flex; align-items:center; justify-content:center;
-        }
+        .btn { display:inline-flex; align-items:center; border:none; cursor:pointer; height:2rem; padding:1rem; border-radius:1rem; transition:background .2s, transform .1s; }
         .btn:hover { background:var(--color); } .btn:active { transform:scale(0.9); }
         .grid-stack { height:calc(100vh - 12vh); margin:1vh; }
         .grid-stack-item-content, .placeholder-content { background:#666; border-radius:1vw; } .placeholder-content { opacity:0.25; }
