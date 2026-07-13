@@ -1,18 +1,4 @@
-name: Update Tokens
-
-on:
-  schedule:
-    - cron: '0 * * * *' # ירוץ אוטומטית בכל שעה עגולה (למשל: 1:00, 2:00 וכד')
-  workflow_dispatch: # מאפשר הרצה ידנית בלחיצת כפתור
-
-jobs:
-  update-token:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Fetch Token and Update CSV
+- name: Fetch Token and Update CSV
         run: |
           # 1. שליפת הטוקן ממאקו
           RESPONSE=$(curl -s \
@@ -27,24 +13,29 @@ jobs:
             exit 1
           fi
           
-          # 2. עדכון קובץ ה-CSV באמצעות פייתון המובנה בשרת
+          # 2. עדכון קובץ ה-CSV באמצעות פייתון בצורה בטוחה
           python3 -c "
           import csv
-          f_path = 'channels.csv'
-          with open(f_path, 'r', encoding='utf-8-sig') as f:
+          
+          file_path = 'channels.csv'
+          rows = []
+          fieldnames = []
+          
+          # קריאה בטוחה ושמירה על המבנה המקורי של העמודות והשורות
+          with open(file_path, 'r', encoding='utf-8-sig') as f:
               reader = csv.DictReader(f)
               fieldnames = reader.fieldnames
-              rows = [dict(row, url='https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?$TICKET' if row.get('id') == 'ch24' else row) for row in reader]
-          with open(f_path, 'w', newline='', encoding='utf-8') as f:
+              for row in reader:
+                  # עדכון אך ורק של כתובת ה-url בערוץ 24
+                  if row.get('id') == 'ch24':
+                      row['url'] = f'https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?{TICKET}'
+                  # הוספת השורה (בין אם שונתה ובין אם לא) כשהיא שומרת על טיפוס המילון המקורי
+                  rows.append(row)
+          
+          # כתיבה נקייה מחדש עם העמודות המקוריות
+          with open(file_path, 'w', newline='', encoding='utf-8') as f:
               writer = csv.DictWriter(f, fieldnames=fieldnames)
               writer.writeheader()
               writer.writerows(rows)
           "
-
-      - name: Commit & Push Changes
-        run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "actions@github.com"
-          git add channels.csv
-          git commit -m "Auto update: updated Ch24 stream token" || exit 0
-          git push
+          echo "CSV updated successfully without affecting other channels!"
