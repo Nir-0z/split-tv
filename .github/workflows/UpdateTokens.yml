@@ -2,63 +2,37 @@ name: Update Tokens
 
 on:
   schedule:
-    - cron: '0 * * * *' # ירוץ אוטומטית בכל שעה עגולה
-  workflow_dispatch: # מאפשר הרצה ידנית בלחיצת כפתור
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   update-token:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Fetch Token and Update CSV
-        env:
-          # הגדרת משתנה סביבה כדי שפייתון יוכל לגשת אליו בבטחה
-          TICKET_ENV: ""
         run: |
-          # 1. שליפת הטוקן ממאקו
-          RESPONSE=$(curl -s \
-            -H "User-Agent: Mozilla/5.0" \
-            -H "Referer: https://www.mako.co.il/" \
-            "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI")
+          RESPONSE=$(curl -s -H "User-Agent: Mozilla/5.0" -H "Referer: https://www.mako.co.il/" "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI")
+          export TICKET_ENV=$(echo "$RESPONSE" | jq -r '.tickets[0].ticket // empty')
           
-          TICKET=$(echo "$RESPONSE" | jq -r '.tickets[0].ticket // empty')
-          
-          if [ -z "$TICKET" ] || [ "$TICKET" == "null" ]; then
-            echo "Error: Failed to retrieve ticket. Response: $RESPONSE"
+          if [ -z "$TICKET_ENV" ] || [ "$TICKET_ENV" == "null" ]; then
             exit 1
           fi
           
-          # ייצוא הטוקן למשתנה הסביבה של השלב
-          export TICKET_ENV="$TICKET"
-          
-          # 2. עדכון קובץ ה-CSV באמצעות פייתון
           python3 -c "
-          import csv
-          import os
-          
-          file_path = 'channels.csv'
-          rows = []
-          fieldnames = []
-          ticket = os.environ.get('TICKET_ENV', '')
-          
-          # קריאה בטוחה ושמירה על המבנה המקורי
-          with open(file_path, 'r', encoding='utf-8-sig') as f:
+          import csv, os
+          f_path = 'channels.csv'
+          ticket = os.environ['TICKET_ENV']
+          with open(f_path, 'r', encoding='utf-8-sig') as f:
               reader = csv.DictReader(f)
               fieldnames = reader.fieldnames
-              for row in reader:
-                  if row.get('id') == 'ch24':
-                      row['url'] = f'https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?{ticket}'
-                  rows.append(row)
-          
-          # כתיבה נקייה מחדש עם העמודות המקוריות
-          with open(file_path, 'w', newline='', encoding='utf-8') as f:
+              rows = [dict(row, url=f'https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?{ticket}' if row.get('id') == 'ch24' else row) for row in reader]
+          with open(f_path, 'w', newline='', encoding='utf-8') as f:
               writer = csv.DictWriter(f, fieldnames=fieldnames)
               writer.writeheader()
               writer.writerows(rows)
           "
-          echo "CSV updated successfully without affecting other channels!"
 
       - name: Commit & Push Changes
         run: |
