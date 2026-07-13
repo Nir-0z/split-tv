@@ -1,4 +1,4 @@
-- name: Fetch Token and Update CSV
+- name: Update Tokens
         run: |
           # 1. שליפת הטוקן ממאקו
           RESPONSE=$(curl -s \
