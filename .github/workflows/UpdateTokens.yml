@@ -3,7 +3,7 @@ name: Update Tokens
 on:
   schedule:
     - cron: '0 4 * * *' # ירוץ אוטומטית פעם ביום ב-4 לפנות בוקר (UTC)
-  workflow_dispatch: # מאפשר לך להריץ את העדכון גם ידנית מתי שתרצה בלחיצת כפתור ב-GitHub
+  workflow_dispatch: # מאפשר להריץ ידנית בלחיצת כפתור
 
 jobs:
   update-token:
@@ -14,20 +14,27 @@ jobs:
 
       - name: Fetch Token and Update CSV
         run: |
-          # 1. שליפת הג'ייסון משרת הזכאויות של מאקו וחילוץ שדה ה-ticket באמצעות jq
-          TICKET=$(curl -s -A "Mozilla/5.0" "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI" | jq -r '.ticket')
+          # 1. פנייה למאקו עם כותרות אבטחה (Referer ו-Origin) שמדמות דפדפן אמיתי באתר שלהם
+          RESPONSE=$(curl -s \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -H "Referer: https://www.mako.co.il/" \
+            -H "Origin: https://www.mako.co.il" \
+            "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI")
           
-          # בדיקה שהטוקן אכן התקבל ולא ריק
+          # חילוץ הטיקט מתוך תגובת הג'ייסון ששמרנו ב-RESPONSE
+          TICKET=$(echo "$RESPONSE" | jq -r '.ticket // empty')
+          
+          # בדיקה שהטוקן אכן התקבל
           if [ -z "$TICKET" ] || [ "$TICKET" == "null" ]; then
             echo "Error: Failed to retrieve ticket from Mako!"
+            echo "Mako Server Response was: $RESPONSE"
             exit 1
           fi
           
           # 2. הרכבת ה-URL המלא של הסטרים
           NEW_URL="https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?$TICKET"
           
-          # 3. החלפת ה-URL של ערוץ 24 בתוך קובץ ה-CSV (מזהה ch24)
-          # פקודה זו מחפשת שורה שמתחילה ב-ch24, ושומרת על שם הערוץ והמדינה, ורק מעדכנת את ה-URL
+          # 3. החלפת ה-URL של ערוץ 24 בתוך קובץ ה-CSV
           sed -i -E "s|^(ch24,[^,]*),[^,]*(,.*)|\1,$NEW_URL\2|" channels.csv
           
           echo "CSV updated successfully with new token."
@@ -37,6 +44,5 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "actions@github.com"
           git add channels.csv
-          # אם לא חל שינוי בטוקן מאז הפעם האחרונה, הסקריפט לא ייכשל אלא פשוט יסיים בשלום
           git commit -m "Auto update: updated Ch24 stream token" || exit 0
           git push
