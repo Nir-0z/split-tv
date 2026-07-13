@@ -21,8 +21,8 @@ jobs:
             -H "Origin: https://www.mako.co.il" \
             "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI")
           
-          # חילוץ הטיקט מתוך תגובת הג'ייסון ששמרנו ב-RESPONSE
-          TICKET=$(echo "$RESPONSE" | jq -r '.ticket // empty')
+          # תיקון החילוץ: שליפת הטיקט מתוך האיבר הראשון במערך tickets
+          TICKET=$(echo "$RESPONSE" | jq -r '.tickets[0].ticket // empty')
           
           # בדיקה שהטוקן אכן התקבל
           if [ -z "$TICKET" ] || [ "$TICKET" == "null" ]; then
