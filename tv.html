@@ -26,14 +26,18 @@
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
         let grid=GridStack.init({ rtl:true, maxRow:8, cellHeight:'auto', margin:'1vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
-        let c=location.search.slice(1).toLowerCase(),hs={},active={};
+        let c=location.search.slice(1).toLowerCase(), hs={}, active={};
+        function addChannel(ch) {
+            if(active[ch.id]) return; active[ch.id]=1;            
+            grid.addWidget({ w:4, h:4, content:`<div class="handle">${ch.name}<a data-id="${ch.id}" onclick="let id=this.dataset.id;hs[id]?.destroy();delete hs[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video id="v${ch.id}" controls autoplay muted playsinline></video>`});
+            let v=$(`#v${ch.id}`)[0]; 
+            if(Hls.isSupported()){ hs[ch.id]=new Hls; hs[ch.id].loadSource(ch.url); hs[ch.id].attachMedia(v) } else v.src=ch.url;
+        }
         fetch('https://raw.githubusercontent.com/Nir-0z/split-tv/refs/heads/master/channels.csv').then(r=>r.text()).then(t=>{
-        let [h,...r]=t.split('\n'),k=h.split(',');
-        r.map(x=>Object.fromEntries(x.split(',').map((v,i)=>[k[i],v]))).filter(x=>x.name&&x.url&&(!c||x.country.toLowerCase()==c)).forEach(x=>$(`<button class="btn">${x.name}</button>`).on('click',()=>{
-            if(active[x.id])return; active[x.id]=1;
-            grid.addWidget({ w:4, h:4, content:`<div class="handle">${x.name}<a data-id="${x.id}" onclick="let id=this.dataset.id;hs[id]?.destroy();delete hs[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video id="v${x.id}" controls autoplay muted playsinline></video>`});
-            let v=$(`#v${x.id}`)[0]; if(Hls.isSupported()){ hs[x.id]=new Hls; hs[x.id].loadSource(x.url); hs[x.id].attachMedia(v) } else v.src=x.url
-        }).appendTo('.selector'))
+            let [h,...r]=t.split('\n'),k=h.split(',');
+            let channels = r.map(x=>Object.fromEntries(x.split(',').map((v,i)=>[k[i],v]))).filter(x=>x.name&&x.url&&(!c||x.country.toLowerCase()==c));
+            const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
+            channels.forEach(x=>{ $(`<button class="btn">${x.name}</button>`).on('click',()=>addChannel(x)).appendTo('.selector'); if(defaultIds.includes(x.id.trim())) { addChannel(x); } });
         });
         onresize=()=>grid.cellHeight(matchMedia("(orientation:portrait)").matches?'5.5vh':'11.5vh');
         onresize();
