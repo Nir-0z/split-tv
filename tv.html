@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8"><meta name="theme-color" content="#1565C0" /><title>המסך המפוצל הישראלי</title>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gridstack@12.6.0/dist/gridstack.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack.min.css">
     <style>
         :root { --color:#1565C0; }
         @font-face { font-family:'Glitch'; src:url('https://fonts.gstatic.com/s/rubikglitch/v2/qkBSXv8b_srFRYQVYrDKh9ZfnSTGCNg.woff2'); }
@@ -21,8 +21,8 @@
 <body>
     <div class="nav">המסך המפוצל הישראלי</div><div class="selector"></div><div class="grid-stack"></div>
     <script src="//code.jquery.com/jquery-4.0.0.slim.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/gridstack@12.6.0/dist/gridstack-all.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack-all.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.light.min.js"></script>
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
         let grid=GridStack.init({ rtl:true, maxRow:8, cellHeight:'auto', margin:'1vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
