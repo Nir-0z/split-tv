@@ -11,33 +11,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch Token and Update CSV
+      - name: Fetch and Update
+        env:
+          URL: "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI"
         run: |
-          RESPONSE=$(curl -s -H "User-Agent: Mozilla/5.0" -H "Referer: https://www.mako.co.il/" "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI")
-          export TICKET_ENV=$(echo "$RESPONSE" | jq -r '.tickets[0].ticket // empty')
-          
-          if [ -z "$TICKET_ENV" ] || [ "$TICKET_ENV" == "null" ]; then
-            exit 1
-          fi
+          TICKET=$(curl -s -H "User-Agent: Mozilla/5.0" -H "Referer: https://www.mako.co.il/" "$URL" | jq -r '.tickets[0].ticket // empty')
+          [ -z "$TICKET" ] || [ "$TICKET" = "null" ] && exit 1
           
           python3 -c "
-          import csv, os
-          f_path = 'channels.csv'
-          ticket = os.environ['TICKET_ENV']
-          with open(f_path, 'r', encoding='utf-8-sig') as f:
-              reader = csv.DictReader(f)
-              fieldnames = reader.fieldnames
-              rows = [dict(row, url=f'https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?{ticket}' if row.get('id') == 'ch24' else row) for row in reader]
-          with open(f_path, 'w', newline='', encoding='utf-8') as f:
-              writer = csv.DictWriter(f, fieldnames=fieldnames)
-              writer.writeheader()
-              writer.writerows(rows)
+          import csv
+          f = 'channels.csv'
+          with open(f, 'r', encoding='utf-8-sig') as file:
+              r = list(csv.DictReader(file))
+          for row in r:
+              if row.get('id') == 'ch24': row['url'] = f'https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?{'$TICKET'}'
+          with open(f, 'w', newline='', encoding='utf-8') as file:
+              w = csv.DictWriter(file, fieldnames=list(r[0].keys()))
+              w.writeheader()
+              w.writerows(r)
           "
 
-      - name: Commit & Push Changes
+      - name: Commit & Push
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "actions@github.com"
-          git add channels.csv
-          git commit -m "Auto update: updated Ch24 stream token" || exit 0
+          git commit -am "Auto update: updated Ch24 stream token" || exit 0
           git push
