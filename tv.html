@@ -30,7 +30,7 @@
         function addChannel(ch) {
             if(active[ch.id]) return; active[ch.id]=1;            
             let video = grid.addWidget({ w:4, h:4, content:`<div class="handle">${ch.name}<a data-id="${ch.id}" onclick="let id=this.dataset.id;players[id]?.destroy();delete players[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video controls autoplay muted playsinline></video>`}).querySelector('video');
-            players[ch.id]=new Hls; players[ch.id].loadSource(ch.url); players[ch.id].attachMedia(video);
+            if(Hls.isSupported()){ players[ch.id]=new Hls; players[ch.id].loadSource(ch.url); players[ch.id].attachMedia(video) } else video.src=ch.url;
         }
         fetch('https://raw.githubusercontent.com/Nir-0z/split-tv/refs/heads/master/channels.csv').then(r=>r.text()).then(t=>{
             let [h,...r]=t.split('\n'),k=h.split(',');
