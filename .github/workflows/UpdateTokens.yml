@@ -2,8 +2,8 @@ name: Update Tokens
 
 on:
   schedule:
-    - cron: '0 4 * * *' # ירוץ אוטומטית פעם ביום ב-4 לפנות בוקר (UTC)
-  workflow_dispatch: # מאפשר להריץ ידנית בלחיצת כפתור
+    - cron: '0 * * * *' # ירוץ אוטומטית בכל שעה עגולה (למשל: 1:00, 2:00 וכד')
+  workflow_dispatch: # מאפשר הרצה ידנית בלחיצת כפתור
 
 jobs:
   update-token:
@@ -12,58 +12,34 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
       - name: Fetch Token and Update CSV
         run: |
-          # 1. פנייה למאקו עם כותרות אבטחה
+          # 1. שליפת הטוקן ממאקו
           RESPONSE=$(curl -s \
-            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -H "User-Agent: Mozilla/5.0" \
             -H "Referer: https://www.mako.co.il/" \
-            -H "Origin: https://www.mako.co.il" \
             "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI")
           
-          # חילוץ הטיקט
           TICKET=$(echo "$RESPONSE" | jq -r '.tickets[0].ticket // empty')
           
-          # בדיקה שהטוקן התקבל
           if [ -z "$TICKET" ] || [ "$TICKET" == "null" ]; then
-            echo "Error: Failed to retrieve ticket from Mako!"
-            echo "Mako Server Response was: $RESPONSE"
+            echo "Error: Failed to retrieve ticket. Response: $RESPONSE"
             exit 1
           fi
           
-          # 2. הרכבת ה-URL המלא של הסטרים
-          NEW_URL="https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?$TICKET"
-          
-          # 3. הרצת סקריפט פייתון קצר ישירות מה-Bash שמחליף את הערך בעמודת 'url' עבור 'ch24'
+          # 2. עדכון קובץ ה-CSV באמצעות פייתון המובנה בשרת
           python3 -c "
           import csv
-          
-          file_path = 'channels.csv'
-          rows = []
-          fieldnames = []
-          
-          # קריאת הקובץ הקיים
-          with open(file_path, 'r', encoding='utf-8-sig') as f:
+          f_path = 'channels.csv'
+          with open(f_path, 'r', encoding='utf-8-sig') as f:
               reader = csv.DictReader(f)
               fieldnames = reader.fieldnames
-              for row in reader:
-                  # אם הגענו לשורה של ערוץ 24, נעדכן את עמודת ה-url
-                  if row.get('id') == 'ch24':
-                      row['url'] = '$NEW_URL'
-                  rows.append(row)
-          
-          # כתיבה מחדש של הקובץ המעודכן
-          with open(file_path, 'w', newline='', encoding='utf-8') as f:
+              rows = [dict(row, url='https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?$TICKET' if row.get('id') == 'ch24' else row) for row in reader]
+          with open(f_path, 'w', newline='', encoding='utf-8') as f:
               writer = csv.DictWriter(f, fieldnames=fieldnames)
               writer.writeheader()
               writer.writerows(rows)
           "
-          echo "CSV updated successfully using Python DictReader!"
 
       - name: Commit & Push Changes
         run: |
