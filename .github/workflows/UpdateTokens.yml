@@ -12,19 +12,24 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
       - name: Fetch Token and Update CSV
         run: |
-          # 1. פנייה למאקו עם כותרות אבטחה (Referer ו-Origin) שמדמות דפדפן אמיתי באתר שלהם
+          # 1. פנייה למאקו עם כותרות אבטחה
           RESPONSE=$(curl -s \
             -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
             -H "Referer: https://www.mako.co.il/" \
             -H "Origin: https://www.mako.co.il" \
             "https://mass.mako.co.il/ClicksStatistics/entitlementsServicesV2.jsp?et=gt&lp=/i/24live_1@195271/master.m3u8?b=200-2500&rv=AKAMAI")
           
-          # תיקון החילוץ: שליפת הטיקט מתוך האיבר הראשון במערך tickets
+          # חילוץ הטיקט
           TICKET=$(echo "$RESPONSE" | jq -r '.tickets[0].ticket // empty')
           
-          # בדיקה שהטוקן אכן התקבל
+          # בדיקה שהטוקן התקבל
           if [ -z "$TICKET" ] || [ "$TICKET" == "null" ]; then
             echo "Error: Failed to retrieve ticket from Mako!"
             echo "Mako Server Response was: $RESPONSE"
@@ -34,10 +39,31 @@ jobs:
           # 2. הרכבת ה-URL המלא של הסטרים
           NEW_URL="https://mako-streaming.akamaized.net/direct/hls/live/2035340/ch24live/index.m3u8?$TICKET"
           
-          # 3. החלפת ה-URL של ערוץ 24 בתוך קובץ ה-CSV
-          sed -i -E "s|^(ch24,[^,]*),[^,]*(,.*)|\1,$NEW_URL\2|" channels.csv
+          # 3. הרצת סקריפט פייתון קצר ישירות מה-Bash שמחליף את הערך בעמודת 'url' עבור 'ch24'
+          python3 -c "
+          import csv
           
-          echo "CSV updated successfully with new token."
+          file_path = 'channels.csv'
+          rows = []
+          fieldnames = []
+          
+          # קריאת הקובץ הקיים
+          with open(file_path, 'r', encoding='utf-8-sig') as f:
+              reader = csv.DictReader(f)
+              fieldnames = reader.fieldnames
+              for row in reader:
+                  # אם הגענו לשורה של ערוץ 24, נעדכן את עמודת ה-url
+                  if row.get('id') == 'ch24':
+                      row['url'] = '$NEW_URL'
+                  rows.append(row)
+          
+          # כתיבה מחדש של הקובץ המעודכן
+          with open(file_path, 'w', newline='', encoding='utf-8') as f:
+              writer = csv.DictWriter(f, fieldnames=fieldnames)
+              writer.writeheader()
+              writer.writerows(rows)
+          "
+          echo "CSV updated successfully using Python DictReader!"
 
       - name: Commit & Push Changes
         run: |
