@@ -7,14 +7,17 @@
         :root { --color:#1565C0; }
         @font-face { font-family:'Glitch'; src:url('https://fonts.gstatic.com/s/rubikglitch/v2/qkBSXv8b_srFRYQVYrDKh9ZfnSTGCNg.woff2'); }
         body, .grid-stack-item-content { margin:0!important; overflow:hidden!important; color:#FFF; font-family:"Arial"; text-align:center; }
-        video { width:100%; height:calc(100% - 4.5vh); object-fit:fill; }
-        .nav { background:var(--color); display:grid; place-items:center; padding:.5rem; font-size:2rem; font-family:"Glitch"; }
-        .selector { background:#F9F9F9; display:flex; flex-wrap:wrap; gap:.5rem; padding:.5rem; }
-        .btn { display:inline-flex; align-items:center; border:none; cursor:pointer; height:2rem; padding:1rem; border-radius:1rem; transition:background .2s, transform .1s; }
+        html, body { height:100vh; }
+        body { display:flex; flex-direction:column; }
+        .nav { background:var(--color); display:grid; place-items:center; padding:.5rem; font-size:2rem; font-family:"Glitch"; height:6vh; }
+        .selector { background:#F9F9F9; display:flex; flex-wrap:nowrap; gap:.5rem; padding:.5rem; height:6vh; overflow-x:auto; -ms-overflow-style:none; scrollbar-width:none; }
+        .selector::-webkit-scrollbar { display:none; }
+        .btn { display:inline-flex; align-items:center; border:none; cursor:pointer; height:2rem; padding:1rem; border-radius:1rem; transition:background .2s, transform .1s; white-space:nowrap; }
         .btn:hover { background:var(--color); } .btn:active { transform:scale(0.9); }
-        .grid-stack { height:calc(100vh - 12vh); margin:1vh; }
-        .grid-stack-item-content, .placeholder-content { background:#666; border-radius:1vw; } .placeholder-content { opacity:0.25; }
+        .grid-stack { height:88vh; margin:1vh; }
+        .grid-stack-item-content, .placeholder-content { background:#666; border-radius:1vw; display:flex; flex-direction:column; } .placeholder-content { opacity:0.25; }
         .handle { display:flex; justify-content:center; align-items:center; position:relative; cursor:move; padding:1vh; opacity:.5; } .handle:hover { opacity:1; } .handle a { position:absolute; cursor:pointer; left:1vh; }
+        video { width:100%; height:0; flex-grow:1; object-fit:fill; }
         .ui-resizable-se, .ui-resizable-sw { bottom:4px!important; background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><path fill="%23FFF" d="M9 3h2L8 0 5 3h2v10H5l3 3 3-3H9"/></svg>')!important; }
     </style>
 </head>
@@ -38,7 +41,7 @@
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
             channels.forEach(ch=>{ $(`<button class="btn">${ch.name}</button>`).on('click',()=>add(ch)).appendTo('.selector'); if(defaultIds.includes(ch.id.trim())) { add(ch); } });
         });
-        onresize=()=>grid.cellHeight(matchMedia("(orientation:portrait)").matches?'5.5vh':'11.5vh');
+        onresize=()=>grid.cellHeight(matchMedia("(orientation:portrait)").matches?'4.5vh':'10.5vh');
         onresize();
     </script>
 </body>
