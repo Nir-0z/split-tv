@@ -25,7 +25,7 @@
     <script src="//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.light.min.js"></script>
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
-        let grid=GridStack.init({ rtl:true, maxRow:8, cellHeight:'auto', margin:'1vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
+        let grid=GridStack.init({ rtl:true, maxRow:8, cellHeight:'auto', margin:'.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
         let c=location.search.slice(1).toLowerCase(), players={}, active={};
         function add(ch) {
             if(active[ch.id]) return; active[ch.id]=1;            
