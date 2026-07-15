@@ -42,17 +42,18 @@
 function resizeGrid(){
     let p = matchMedia("(orientation:portrait)").matches;
 
+    let vh = window.visualViewport
+        ? window.visualViewport.height / 100
+        : window.innerHeight / 100;
+
+    let nav = 8 * vh;
+    let menu = 8 * vh;
+    let gridHeight = window.innerHeight - nav - menu;
+
     grid.engine.maxRow = p ? 12 : 8;
 
     grid.column(p ? 8 : 12)
-        .cellHeight(p ? "7dvh" : "10.5dvh");
-
-    grid.engine.nodes.forEach(n => {
-        grid.update(n.el, {
-            w: 4,
-            h: 4
-        });
-    });
+        .cellHeight(gridHeight / (p ? 12 : 8));
 
     grid.compact();
 }
