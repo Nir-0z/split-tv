@@ -35,9 +35,9 @@
             let [h,...r]=t.split('\n'),k=h.split(',');
             let channels = r.map(line=>Object.fromEntries(line.split(',').map((v,i)=>[k[i],v]))).filter(ch=>ch.name&&ch.url&&(!c||ch.country.toLowerCase()==c));
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
-            channels.forEach(ch=>{ $(`<button class="btn">${ch.name}</button>`).on('click',()=>add(ch)).appendTo('.menu'); if(defaultIds.includes(ch.id.trim())) { add(ch); } });
+            channels.forEach(ch=>{$(`<button class="btn">${ch.name}</button>`).appendTo('.menu').click(()=>add(ch)); if(defaultIds.includes(ch.id))add(ch)});
         });
-        (onresize=()=>{let p=matchMedia("(orientation:portrait)").matches; grid.opts.maxRow=p?12:8; grid.column(p?8:12).cellHeight(p?'7vh':'10.5vh')})();
+        addEventListener('orientationchange', onresize = () => { let p = matchMedia("(orientation:portrait)").matches; grid.opts.maxRow = p ? 12 : 8; grid.column(p ? 8 : 12).cellHeight(p ? '7vh' : '10.5vh') }); onresize();
     </script>
 </body>
 </html>
