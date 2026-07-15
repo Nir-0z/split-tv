@@ -24,7 +24,7 @@
     <script src="//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.light.min.js"></script>
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
-        let grid=GridStack.init({ rtl:true, maxRow:'8', margin:'.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
+        let grid=GridStack.init({ rtl:true, margin:'.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
         let c=location.search.slice(1).toLowerCase(), players={}, active={};
         function add(ch) {
             if(active[ch.id] || !grid.willItFit({w:4,h:4})) return; active[ch.id]=1;
@@ -37,7 +37,7 @@
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
             channels.forEach(ch=>{ $(`<button class="btn">${ch.name}</button>`).on('click',()=>add(ch)).appendTo('.menu'); if(defaultIds.includes(ch.id.trim())) { add(ch); } });
         });
-        (onresize=()=>{let p=matchMedia("(orientation:portrait)").matches; grid.column(p?8:12).cellHeight(p?'10.5vh':'7vh')})();
+        (onresize=()=>{let p=matchMedia("(orientation:portrait)").matches; grid.opts.maxRow=p?12:8; grid.column(p?8:12).cellHeight(p?'10.5vh':'7vh')})();
     </script>
 </body>
 </html>
