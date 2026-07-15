@@ -27,7 +27,7 @@
         let grid=GridStack.init({ rtl:true, maxRow:'8', margin:'.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
         let c=location.search.slice(1).toLowerCase(), players={}, active={};
         function add(ch) {
-            if(active[ch.id] || !grid.willItFit(0,0,4,4,1)) return; active[ch.id]=1;
+            if(active[ch.id] || !grid.willItFit({w:4,h:4})) return; active[ch.id]=1;
             let video = grid.addWidget({ w:4, h:4, content:`<div class="handle">${ch.name}<a data-id="${ch.id}" onclick="let id=this.dataset.id;players[id]?.destroy();delete players[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video controls autoplay muted playsinline></video>`}).querySelector('video');
             if(Hls.isSupported()){ players[ch.id]=new Hls; players[ch.id].loadSource(ch.url); players[ch.id].attachMedia(video) } else video.src=ch.url;
         }
