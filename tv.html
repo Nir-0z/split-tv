@@ -37,7 +37,7 @@
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
             channels.forEach(ch=>{ $(`<button class="btn">${ch.name}</button>`).on('click',()=>add(ch)).appendTo('.menu'); if(defaultIds.includes(ch.id.trim())) { add(ch); } });
         });
-        (onresize=()=>grid.cellHeight(innerHeight>innerWidth?'7vh':'10.5vh'))();
+        (onresize=()=>{let p=matchMedia("(orientation:portrait)").matches; grid.column(p?12:8).cellHeight(p?'10.5vh':'7vh')})();
     </script>
 </body>
 </html>
