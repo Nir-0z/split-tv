@@ -37,8 +37,7 @@
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
             channels.forEach(ch=>{ $(`<button class="btn">${ch.name}</button>`).on('click',()=>add(ch)).appendTo('.menu'); if(defaultIds.includes(ch.id.trim())) { add(ch); } });
         });
-        onresize=()=>grid.cellHeight(matchMedia("(orientation:portrait)").matches?'5vh':'11vh');
-        onresize();
+        (onresize=()=>grid.cellHeight(innerHeight>innerWidth?'5vh':'11vh'))();
     </script>
 </body>
 </html>
