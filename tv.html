@@ -37,7 +37,7 @@
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
             channels.forEach(ch=>{$(`<button class="btn">${ch.name}</button>`).appendTo('.menu').click(()=>add(ch)); if(defaultIds.includes(ch.id))add(ch)});
         });
-        (onresize = matchMedia("(orientation:portrait)").onchange = () => setTimeout(() => { let p = matchMedia("(orientation:portrait)").matches; grid.opts.maxRow = p ? 12 : 8; grid.column(p ? 8 : 12).cellHeight(p ? '7vh' : '10.5vh') }, 50))();
+        (onresize = screen.orientation.onchange = () => { let p = matchMedia("(orientation:portrait)").matches; grid.opts.maxRow = p ? 12 : 8; grid.column(p ? 8 : 12).cellHeight(p ? '7vh' : '10.5vh') })();
     </script>
 </body>
 </html>
