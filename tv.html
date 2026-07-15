@@ -7,8 +7,8 @@
         :root { --color:#1565C0; }
         @font-face { font-family:'Glitch'; src:url('https://fonts.gstatic.com/s/rubikglitch/v2/qkBSXv8b_srFRYQVYrDKh9ZfnSTGCNg.woff2'); }
         body, .grid-stack-item-content { margin:0!important; color:#FFF; font-family:"Arial"; text-align:center; }
-        .nav { background:var(--color); display:grid; place-items:center; height:6vh; font-size:2rem; font-family:"Glitch"; }
-        .menu { background:#F9F9F9; display:flex; place-items:center; height:6vh; gap:.5rem; padding:0 .5rem; overflow-x:auto; scrollbar-width:thin; }
+        .nav { background:var(--color); display:grid; place-items:center; height:8vh; font-size:2rem; font-family:"Glitch"; }
+        .menu { background:#F9F9F9; display:flex; place-items:center; height:8vh; gap:.5rem; padding:0 .5rem; overflow-x:auto; scrollbar-width:thin; }
         .btn { display:inline-flex; align-items:center; white-space:nowrap; border:none; cursor:pointer; padding:.5rem; border-radius:.5rem; transition:background .5s, transform .5s; }
         .btn:hover { background:var(--color); } .btn:active { transform:scale(0.9); }
         .grid-stack-item-content, .placeholder-content { background:#666; border-radius:1rem; display:flex; flex-direction:column; } .placeholder-content { opacity:.5; }
@@ -37,7 +37,7 @@
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
             channels.forEach(ch=>{ $(`<button class="btn">${ch.name}</button>`).on('click',()=>add(ch)).appendTo('.menu'); if(defaultIds.includes(ch.id.trim())) { add(ch); } });
         });
-        (onresize=()=>grid.cellHeight(innerHeight>innerWidth?'5vh':'11vh'))();
+        (onresize=()=>grid.cellHeight(innerHeight>innerWidth?'7vh':'10.5vh'))();
     </script>
 </body>
 </html>
