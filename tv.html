@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -8,8 +7,8 @@
         :root { --color:#1565C0; }
         @font-face { font-family:'Glitch'; src:url('https://fonts.gstatic.com/s/rubikglitch/v2/qkBSXv8b_srFRYQVYrDKh9ZfnSTGCNg.woff2'); }
         body, .grid-stack-item-content { margin:0!important; color:#FFF; font-family:"Arial"; text-align:center; }
-        .nav { background:var(--color); display:grid; place-items:center; height:8dvh; font-size:2rem; font-family:"Glitch"; }
-        .menu { background:#F9F9F9; display:flex; place-items:center; height:8dvh; gap:.5rem; padding:0 .5rem; overflow-x:auto; scrollbar-width:thin; }
+        .nav { background:var(--color); display:grid; place-items:center; height:8vh; font-size:2rem; font-family:"Glitch"; }
+        .menu { background:#F9F9F9; display:flex; place-items:center; height:8vh; gap:.5rem; padding:0 .5rem; overflow-x:auto; scrollbar-width:thin; }
         .btn { display:inline-flex; align-items:center; white-space:nowrap; border:none; cursor:pointer; padding:.5rem; border-radius:.5rem; transition:background .5s, transform .5s; }
         .btn:hover { background:var(--color); } .btn:active { transform:scale(0.9); }
         .grid-stack-item-content, .placeholder-content { background:#666; border-radius:1rem; display:flex; flex-direction:column; } .placeholder-content { opacity:.5; }
@@ -39,27 +38,41 @@
             channels.forEach(ch=>{$(`<button class="btn">${ch.name}</button>`).appendTo('.menu').click(()=>add(ch)); if(defaultIds.includes(ch.id))add(ch)});
         });
 
-function resizeGrid(){
+let currentOrientation = null;
+
+function resizeGrid() {
     let p = matchMedia("(orientation:portrait)").matches;
+    let gridHeight = window.innerHeight * 0.84;
 
-    let vh = window.visualViewport
-        ? window.visualViewport.height / 100
-        : window.innerHeight / 100;
+    // אנחנו נפעיל את תהליך ההחלפה רק אם באמת התבצע סיבוב של המסך/כיוון
+    if (currentOrientation !== p) {
+        currentOrientation = p;
+        
+        // 1. קוראים הכל ועושים בדיוק את ההחלפה שביקשת (רוחב לגובה, גובה לרוחב) ללא מספר קבוע
+        let savedItems = grid.getGridItems().map(el => {
+            let n = el.gridstackNode;
+            return { el: el, w: n.h, h: n.w }; 
+        });
 
-    let nav = 8 * vh;
-    let menu = 8 * vh;
-    let gridHeight = window.innerHeight - nav - menu;
+        // 2. מנתקים את האלמנטים מניהול הגריד (false אומר: אל תמחק את תוכן ה-HTML והוידאו!)
+        grid.removeAll(false);
 
-    grid.engine.maxRow = p ? 12 : 8;
+        // 3. משנים את הגריד עצמו כשהוא ריק ללא הפרעות
+        grid.column(p ? 8 : 12);
+        grid.engine.maxRow = p ? 12 : 8;
+        grid.cellHeight(gridHeight / (p ? 12 : 8));
 
-    grid.column(p ? 8 : 12)
-        .cellHeight(gridHeight / (p ? 12 : 8));
-
-    grid.compact();
+        // 4. זורקים אותם חזרה פנימה. הגריד יסדר אותם בצורה טבעית ונקייה מההתחלה ועד הסוף.
+        savedItems.forEach(item => {
+            grid.makeWidget(item.el, { w: item.w, h: item.h, autoPosition: true });
+        });
+    } else {
+        // אם רק הייתה גלילה או כיווץ קטן של המסך באותה אוריינטציה, נעדכן רק את הגובה
+        grid.cellHeight(gridHeight / (p ? 12 : 8));
+    }
 }
 
 onresize = onorientationchange = () => resizeGrid();
-
 resizeGrid();
 
     </script>
