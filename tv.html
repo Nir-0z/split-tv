@@ -24,11 +24,11 @@
     <script src="//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.light.min.js"></script>
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
-        let grid=GridStack.init({ rtl:true, margin:'.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
+        let grid=GridStack.init({rtl:true,margin:'.5vh',draggable:{handle:'.handle'},resizable:{handles:'s,e,w,se,sw'},alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent)});
         let c=location.search.slice(1).toLowerCase(), players={}, active={};
         function add(ch) {
             if(active[ch.id] || !grid.willItFit({w:4,h:4})) return; active[ch.id]=1;
-            let video = grid.addWidget({ w:4, h:4, content:`<div class="handle">${ch.name}<a data-id="${ch.id}" onclick="let id=this.dataset.id;players[id]?.destroy();delete players[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video controls autoplay muted playsinline webkit-playsinline="true"></video>`}).querySelector('video');
+            let video = grid.addWidget({w:4,h:4,content:`<div class="handle">${ch.name}<a data-id="${ch.id}" onclick="let id=this.dataset.id;players[id]?.destroy();delete players[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video controls autoplay muted playsinline webkit-playsinline="true"></video>`}).querySelector('video');
             if(Hls.isSupported()){ players[ch.id]=new Hls; players[ch.id].loadSource(ch.url); players[ch.id].attachMedia(video) } else video.src=ch.url;
         }
         fetch('https://raw.githubusercontent.com/Nir-0z/split-tv/refs/heads/master/channels.csv').then(r=>r.text()).then(t=>{
@@ -37,44 +37,16 @@
             const defaultIds = ['ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16'];
             channels.forEach(ch=>{$(`<button class="btn">${ch.name}</button>`).appendTo('.menu').click(()=>add(ch)); if(defaultIds.includes(ch.id))add(ch)});
         });
-
-let currentOrientation = null;
-
-function resizeGrid() {
-    let p = matchMedia("(orientation:portrait)").matches;
-    let gridHeight = window.innerHeight * 0.84;
-
-    // אנחנו נפעיל את תהליך ההחלפה רק אם באמת התבצע סיבוב של המסך/כיוון
-    if (currentOrientation !== p) {
-        currentOrientation = p;
-        
-        // 1. קוראים הכל ועושים בדיוק את ההחלפה שביקשת (רוחב לגובה, גובה לרוחב) ללא מספר קבוע
-        let savedItems = grid.getGridItems().map(el => {
-            let n = el.gridstackNode;
-            return { el: el, w: n.h, h: n.w }; 
-        });
-
-        // 2. מנתקים את האלמנטים מניהול הגריד (false אומר: אל תמחק את תוכן ה-HTML והוידאו!)
-        grid.removeAll(false);
-
-        // 3. משנים את הגריד עצמו כשהוא ריק ללא הפרעות
-        grid.column(p ? 8 : 12);
-        grid.engine.maxRow = p ? 12 : 8;
-        grid.cellHeight(gridHeight / (p ? 12 : 8));
-
-        // 4. זורקים אותם חזרה פנימה. הגריד יסדר אותם בצורה טבעית ונקייה מההתחלה ועד הסוף.
-        savedItems.forEach(item => {
-            grid.makeWidget(item.el, { w: item.w, h: item.h, autoPosition: true });
-        });
-    } else {
-        // אם רק הייתה גלילה או כיווץ קטן של המסך באותה אוריינטציה, נעדכן רק את הגובה
-        grid.cellHeight(gridHeight / (p ? 12 : 8));
-    }
-}
-
-onresize = onorientationchange = () => resizeGrid();
-resizeGrid();
-
+        onresize = function resize() {
+        let columns=innerWidth<innerHeight?8:12, rows=20-columns;
+        if (grid.saved!=columns) {
+            let items = grid.engine.nodes.sort((a,b)=>a.y-b.y || a.x-b.x).map(n=>[n.el,n.h,n.w]);
+            grid.removeAll(false).column(grid.saved=columns).engine.maxRow=rows;
+            items.map(([e,w,h])=>grid.makeWidget(e,{w,h, autoPosition: true}));
+        }
+        grid.cellHeight(innerHeight*.84/rows);
+        return resize;
+        }();
     </script>
 </body>
 </html>
