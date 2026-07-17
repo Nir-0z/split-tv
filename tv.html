@@ -5,14 +5,15 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack.min.css">
     <style>
         :root { --color:#1565C0; }
+    	html { font-size:10px; } @media (orientation: portrait) { html { font-size:40px; } }
         @font-face { font-family:'Glitch'; src:url('https://fonts.gstatic.com/s/rubikglitch/v2/qkBSXv8b_srFRYQVYrDKh9ZfnSTGCNg.woff2'); }
         body, .grid-stack-item-content { margin:0!important; color:#FFF; font-family:"Arial"; text-align:center; }
-        .nav { background:var(--color); display:grid; place-items:center; height:8vh; font-size:2rem; font-family:"Glitch"; }
-        .menu { background:#F9F9F9; display:flex; place-items:center; height:8vh; gap:.5rem; padding:0 .5rem; overflow-x:auto; scrollbar-width:thin; }
-        .btn { display:inline-flex; align-items:center; white-space:nowrap; border:none; cursor:pointer; padding:.5rem; border-radius:.5rem; transition:background .5s, transform .5s; }
+        .nav { background:var(--color); display:grid; place-items:center; height:4rem; font-size:1.5rem; font-family:"Glitch"; }
+        .menu { background:#F9F9F9; display:flex; place-items:center; height:4rem; gap:.5rem; padding:0 .5rem; overflow-x:auto; scrollbar-width:thin; }
+        .btn { display:inline-flex; align-items:center; white-space:nowrap; border:none; cursor:pointer; padding:.5rem; border-radius:1rem;  font-size:1rem; transition:background .5s, transform .5s; }
         .btn:hover { background:var(--color); } .btn:active { transform:scale(0.9); }
         .grid-stack-item-content, .placeholder-content { background:#666; border-radius:1rem; display:flex; flex-direction:column; } .placeholder-content { opacity:.5; }
-        .handle { display:flex; justify-content:center; align-items:center; position:relative; cursor:move; padding:.5rem; opacity:.5; } .handle:hover { opacity:1; } .handle a { position:absolute; cursor:pointer; left:1vh; }
+        .handle { display:flex; justify-content:center; align-items:center; position:relative; cursor:move; padding:1rem; opacity:.5; } .handle:hover { opacity:1; } .handle a { position:absolute; cursor:pointer; left:.5rem; }
         video { width:100%; height:0; flex-grow:1; object-fit:fill; }
         .ui-resizable-se, .ui-resizable-sw { bottom:4px!important; background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><path fill="%23FFF" d="M9 3h2L8 0 5 3h2v10H5l3 3 3-3H9"/></svg>')!important; }
     </style>
@@ -24,11 +25,11 @@
     <script src="//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.light.min.js"></script>
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
-        let grid=GridStack.init({rtl:true,margin:'.5vh',draggable:{handle:'.handle'},resizable:{handles:'s,e,w,se,sw'},alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent)});
+        let grid=GridStack.init({ rtl:true, margin:'.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
         let c=location.search.slice(1).toLowerCase(), players={}, active={};
         function add(ch) {
             if(active[ch.id] || !grid.willItFit({w:4,h:4})) return; active[ch.id]=1;
-            let video = grid.addWidget({w:4,h:4,content:`<div class="handle">${ch.name}<a data-id="${ch.id}" onclick="let id=this.dataset.id;players[id]?.destroy();delete players[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video controls autoplay muted playsinline webkit-playsinline="true"></video>`}).querySelector('video');
+            let video = grid.addWidget({ w:4, h:4, content:`<div class="handle">${ch.name}<a data-id="${ch.id}" onclick="let id=this.dataset.id;players[id]?.destroy();delete players[id];delete active[id];grid.removeWidget(this.closest('.grid-stack-item'))">⮾</a></div><video controls autoplay muted playsinline webkit-playsinline="true"></video>`}).querySelector('video');
             if(Hls.isSupported()){ players[ch.id]=new Hls; players[ch.id].loadSource(ch.url); players[ch.id].attachMedia(video) } else video.src=ch.url;
         }
         fetch('https://raw.githubusercontent.com/Nir-0z/split-tv/refs/heads/master/channels.csv').then(r=>r.text()).then(t=>{
@@ -38,15 +39,15 @@
             channels.forEach(ch=>{$(`<button class="btn">${ch.name}</button>`).appendTo('.menu').click(()=>add(ch)); if(defaultIds.includes(ch.id))add(ch)});
         });
         onresize = function resize() {
-        let columns=innerWidth<innerHeight?8:12, rows=20-columns;
-        if (grid.saved!=columns) {
-            let items = grid.engine.nodes.sort((a,b)=>a.y-b.y || a.x-b.x).map(n=>[n.el,n.h,n.w]);
-            grid.removeAll(false).column(grid.saved=columns).engine.maxRow=rows;
-            items.map(([e,w,h])=>grid.makeWidget(e,{w,h, autoPosition: true}));
-        }
-        grid.cellHeight(innerHeight*.84/rows);
-        return resize;
-        }();
+            let columns=innerWidth<innerHeight?8:12, rows=20-columns;
+            if (grid.saved!=columns) {
+                let items = grid.engine.nodes.sort((a,b)=>a.y-b.y||a.x-b.x).map(n=>[n.el,n.h,n.w]);
+                grid.removeAll(false).column(grid.saved=columns).engine.maxRow=rows;
+                items.map(([e,w,h])=>grid.makeWidget(e,{w,h}));
+            }
+            grid.cellHeight((innerHeight-grid.el.offsetTop)/rows);
+            return resize;
+       }();
     </script>
 </body>
 </html>
