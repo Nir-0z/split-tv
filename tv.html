@@ -22,7 +22,7 @@
     <div class="nav">המסך המפוצל הישראלי</div><div class="menu"></div><div class="grid-stack"></div>
     <script src="//code.jquery.com/jquery-4.0.0.slim.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack-all.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.light.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
     <script>
         GridStack.renderCB=(el,w)=>el.innerHTML=w.content||'';
         let grid=GridStack.init({ rtl:true, margin:'.5vh', draggable:{handle:'.handle'}, resizable:{handles:'s,e,w,se,sw'}, alwaysShowResizeHandle:/Android|iPhone|iPad/i.test(navigator.userAgent) });
