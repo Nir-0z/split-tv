@@ -1,0 +1,53 @@
+name: Daily Channel Link Checker
+
+on:
+  schedule:
+    # מריץ את הבדיקה בכל יום בשעה 08:00 בבוקר (לפי שעון UTC)
+    - cron: '0 8 * * *'
+  workflow_dispatch: # מאפשר להריץ את הבדיקה ידנית מכרטיסיית ה-Actions
+
+permissions:
+  issues: write # נותן הרשאה לסקריפט לפתוח Issue חדש
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check URLs and Create Issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # מפתח מובנה וחינמי של גיטהאב
+        run: |
+          failed_channels=""
+          
+          # מעבר על ה-CSV ובדיקת הקישורים
+          while IFS=, read -r id name url country || [ -n "$id" ]; do
+            # דילוג על שורת הכותרת או שורות חסרות קישור
+            if [ "$id" = "id" ] || [ -z "$url" ]; then continue; fi
+            
+            # ניקוי הקישור מתווים נסתרים
+            clean_url=$(echo "$url" | tr -d '\r\n[:space:]')
+            
+            echo "בודק את הערוץ: $name..."
+            
+            # בדיקת זמינות זריזה של 10 שניות לכל קישור
+            if ! curl --output /dev/null --silent --head --fail --max-time 10 "$clean_url"; then
+              echo "❌ הערוץ $name לא זמין!"
+              failed_channels="$failed_channels- **$name** (ID: $id)\n"
+            fi
+          done < channels.csv
+          
+          # פתיחת Issue אם נמצאו ערוצים שבורים
+          if [ -n "$failed_channels" ]; then
+            echo "פותח Issue חדש בגיטהאב..."
+            
+            title="⚠️ נמצאו ערוצים מושבתים - $(date +'%Y-%m-%d')"
+            body="הבדיקה היומית האוטומטית זיהתה שהקישורים לערוצים הבאים לא מגיבים או מחזירים שגיאה:\n\n$failed_channels\nמומלץ לבדוק את הכתובות בקובץ ה-CSV."
+            
+            # יצירת ה-Issue דרך הפקודה המובנית של גיטהאב
+            gh issue create --title "$title" --body "$body" --label "bug"
+          else
+            echo "כל הערוצים עובדים בצורה תקינה!"
+          fi
